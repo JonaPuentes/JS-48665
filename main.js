@@ -13,6 +13,11 @@ let apellidoUser = prompt ("Ingresa tu apellido");
 let datosUser = nombreUser + " " + apellidoUser;
 console.log(datosUser);
 
+function saludoEspecifico (nombre){
+    alert(`Hola ${nombre}`);
+}
+saludoEspecifico(datosUser)
+
 const mayor = 18; 
 let edad = parseInt(prompt("Ingresa tu edad"));
 
@@ -51,7 +56,7 @@ while (seleccion != "no"){
             Precio = 1200
             break
             case "Aperol":
-            Precio = 1200
+            Precio = 1200 
             break
             case "Vino Portillo":
             Precio = 600
