@@ -1,17 +1,18 @@
-const productos = [
-    {nombre:"Santa Julia", Precio: 900},
-    {nombre:"Fernet", Precio: 1200},
-    {nombre:"Vino Portillo", Precio: 600},
-    {nombre:"Aperol", Precio: 1200},
-    {nombre:"Campari", Precio: 800},
-];
+// const productos = [
+//     {nombre:"Santa Julia", Precio: 900},
+//     {nombre:"Fernet", Precio: 1200},
+//     {nombre:"Vino Portillo", Precio: 600},
+//     {nombre:"Aperol", Precio: 1200},
+//     {nombre:"Campari", Precio: 800},
+// ];
+// console.log(productos);
+
 
 
 let nombreUser = prompt("Bienvenido a CerTek, Por favor ingrese su nombre");
 let apellidoUser = prompt ("Ingresa tu apellido");
 
 let datosUser = nombreUser + " " + apellidoUser;
-console.log(datosUser);
 
 function saludoEspecifico (nombre){
     alert(`Hola ${nombre}`);
@@ -26,7 +27,7 @@ if(edad >=mayor){
 } else {
     alert("No sos mayor de 18, no podes ingresar a la web");
 }
-
+console.log(datosUser + "," + edad );
 let carrito = [];
 
 let seleccion = prompt("¿Quiere comprar alcohol?, Responda si o no");
@@ -47,12 +48,12 @@ while (seleccion != "no"){
     let productos = prompt("¿Que deseabas comprar?");
     let Precio = 0;
 
-    if(productos == "Vino Santa Julia" || productos == "Fernet Branca" || productos== "Aperol" ||productos == "Vino Portillo" ||productos == "Campari"){
+    if(productos == "Santa Julia" || productos == "Fernet" || productos== "Aperol" ||productos == "Vino Portillo" ||productos == "Campari"){
         switch(productos){
-            case "Vino Santa Julia":
+            case "Santa Julia":
             Precio = 900
             break
-            case "Fernet Branca":
+            case "Fernet":
             Precio = 1200
             break
             case "Aperol":
@@ -71,6 +72,7 @@ while (seleccion != "no"){
     } else{
         alert("No tenemos ese producto")
     }
+    console.log(listaDeProductos);
     seleccion = prompt ("¿Desea seguir comprando?")
     while (seleccion === "no"){
         alert ("Gracias por la compra.");
@@ -78,6 +80,5 @@ while (seleccion != "no"){
             console.log(`producto: ${carritoFinal.productos}, unidades: ${carrito.unidades} Precio por unidad: ${carritoFinal.unidades * carritoFinal.precio}`)
         })
         break;
-
     }
 }
