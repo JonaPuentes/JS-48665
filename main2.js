@@ -79,24 +79,25 @@ cardBoostrap(productos)
 
 const arrayCarrito = [];
 class prodCarrito{
-    constructor(productos, cant,){
+    constructor(productos, cant, precio){
         this.producto = productos;
         this.cantidad = cant;
+        this.precio = precio;
     }
     sumaStock(){
         this.cantidad = this.cantidad + 1
     }
 }
 
-let arrayPrecios = [];
-class prodCarrito2{
-    constructor(precio){
-        this.precio = precio
-}
-    totalSuma(){
-        this.precio = this.precio + 1
-    }
-}
+// let arrayPrecios = [];
+// class prodCarrito2{
+//     constructor(precio){
+//         this.precio = precio
+// }
+//     totalSuma(){
+//         this.precio = this.precio + 1
+//     }
+// }
 
 function sumaCarrito(prod){
     let variableCarrito = arrayCarrito.find(e => e.producto == prod);
@@ -105,14 +106,11 @@ function sumaCarrito(prod){
     let posicion = arrayCarrito.findIndex(elem => elem.producto == variableCarrito.producto)
     arrayCarrito[posicion].sumaStock()
     }else{
-        const enCarrito = new prodCarrito(prod, 1)
+        const enCarrito = new prodCarrito(prod, 1,)
         arrayCarrito.push(enCarrito);
-        console.log(`${arrayCarrito} + ${arrayPrecios}` )
+        console.log(arrayCarrito);
     }
 }
-
-const total = arrayCarrito.reduce((acc,e) => acc + e.precio, 0);
-console.log(total)
 
 
 
