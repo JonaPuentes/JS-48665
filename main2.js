@@ -21,34 +21,34 @@ console.log(datosUser + "," + edad );
 //Identificador
 
 class Producto {
-    constructor(id, nombre, precio, stock, imagen) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.stock = stock;
-        this.imagen = imagen;
-    }
+constructor(id, nombre, precio, stock, imagen) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stock = stock;
+    this.imagen = imagen;
+}
 
-    restaStock() {
-        this.stock = this.stock - 1;
-        console.log(`El stock de ${this.nombre} ha sido actualizado`);
-    }
+restaStock() {
+    this.stock = this.stock - 1;
+    console.log(`El stock de ${this.nombre} ha sido actualizado`);
+}
 }
 
 class prodCarrito {
-    constructor(producto, cantidad, precio) {
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.precio = precio;
-    }
+constructor(producto, cantidad, precio) {
+    this.producto = producto;
+    this.cantidad = cantidad;
+    this.precio = precio;
+}
 
-    sumaStock() {
-        this.cantidad = this.cantidad + 1;
-    }
+sumaStock() {
+    this.cantidad = this.cantidad + 1;
+}
 
-    precioTotal() {
-      return this.cantidad * this.precio;
-    }
+precioTotal() {
+    return this.cantidad * this.precio;
+}
 }
 
 const producto0 = new Producto(0, 'Santa Julia', 900, 15, 'Santa Julia.png');
@@ -60,58 +60,25 @@ const producto4 = new Producto(4, 'Campari', 600, 15, 'Campari.png');
 const productos = [producto0, producto1, producto2, producto3, producto4];
 console.log(productos);
 
-const cardDiv = (stockProducto) => {
-    for (elem of stockProducto){
-        let = card = document.createElement("div")
-        card.innerHTML = `<h2>Agregar ${elem.nombre}</h2>
-        <input type ="button" value="comprame" onclick ="elem.restaStock()">`
-        document.body.append(card)
-    }
-}
-cardDiv(productos)
-
-
-
-//Func (DOM)
-const cardBoostrap = (stockProducto) =>{
-    for (e of stockProducto){
-        let card = document.createElement("div")
-        card.innerHTML = `<div class="card" style="width: 18rem;">
-                            <img src="./img/${e.imagen}" class="card-img-top" alt="..."/>
-                            <div class="card-body">
-                            <h5 class="card-title">${e.nombre}</h5>
-                            <p class="card-text">Aprovecha estas ofertas ${e.precio}</p>
-                            <input type ="button" onclick="sumaCarrito (${e.id})" class= "btn btn-primary" value ="Agregar al Carrito" >
-                            </div>
-                            </div>`
-                document.body.append(card);
-    }
-}
-cardBoostrap(productos)
-
 const arrayCarrito = [];
 
-function sumaCarrito(nombreProducto, cantidad,) {
-    if (typeof cantidad === "number" && cantidad > 0) {
-        let productoEnCarrito = arrayCarrito.find(prod => prod.producto.nombre === nombreProducto);
-        if (productoEnCarrito != undefined) {
+function sumaCarrito(Producto, cantidad,) {
+if (typeof cantidad === "number" && cantidad > 0) {
+    let productoEnCarrito = arrayCarrito.find(prod => prod.producto.nombre === Producto);
+    if (productoEnCarrito != undefined) {
         productoEnCarrito.sumaStock();
-        } else {
-        const producto = productos.find(p => p.nombre === nombreProducto);
-        const enCarrito = new prodCarrito(producto, cantidad, producto.precio);
-        arrayCarrito.push(enCarrito);
-        }
-        actualizarCarrito();
     } else {
-        const totalCarrito = precioTotalCarrito();
-        console.log(`El precio total de la compra es de ${totalCarrito}`);
+        const producto = productos.find(p => p.nombre === Producto);
+        const enCarrito = new prodCarrito(Producto, cantidad, producto.precio);
+        arrayCarrito.push(enCarrito);
     }
+} 
 }
 
 function precioTotalCarrito() {
     let total = 0;
     for (let i = 0; i < arrayCarrito.length; i++) {
-        total += arrayCarrito[i].precioTotal();
+    total += arrayCarrito[i].precioTotal();
     }
     return total;
 }
