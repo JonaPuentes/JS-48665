@@ -20,25 +20,40 @@ console.log(datosUser + "," + edad );
 
 //Identificador
 
-class Producto{
-    constructor(id, nombre, precio, stock, imagen){
+class Producto {
+    constructor(id, nombre, precio, stock, imagen) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.stock  = stock;
+        this.stock = stock;
         this.imagen = imagen;
     }
-    restaStock(){
+
+    restaStock() {
         this.stock = this.stock - 1;
         console.log(`El stock de ${this.nombre} ha sido actualizado`);
     }
-};
+}
 
-//objetos
+class prodCarrito {
+    constructor(producto, cantidad, precio) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
+    sumaStock() {
+        this.cantidad = this.cantidad + 1;
+    }
+
+    precioTotal() {
+      return this.cantidad * this.precio;
+    }
+}
 
 const producto0 = new Producto(0, 'Santa Julia', 900, 15, 'Santa Julia.png');
-const producto1 = new Producto(1,'Fernet', 1200, 20, 'Fernet.png');
-const producto2 = new Producto(2, 'Portillo',600, 10, 'Portillo.png');
+const producto1 = new Producto(1, 'Fernet', 1200, 20, 'Fernet.png');
+const producto2 = new Producto(2, 'Portillo', 600, 10, 'Portillo.png');
 const producto3 = new Producto(3, 'Aperol', 1200, 7, 'Aperol.png');
 const producto4 = new Producto(4, 'Campari', 600, 15, 'Campari.png');
 
@@ -74,43 +89,31 @@ const cardBoostrap = (stockProducto) =>{
 }
 cardBoostrap(productos)
 
-
-//arrayCarrito
-
 const arrayCarrito = [];
-class prodCarrito{
-    constructor(productos, cant, precio){
-        this.producto = productos;
-        this.cantidad = cant;
-        this.precio = precio;
-    }
-    sumaStock(){
-        this.cantidad = this.cantidad + 1
-    }
-}
 
-// let arrayPrecios = [];
-// class prodCarrito2{
-//     constructor(precio){
-//         this.precio = precio
-// }
-//     totalSuma(){
-//         this.precio = this.precio + 1
-//     }
-// }
-
-function sumaCarrito(prod){
-    let variableCarrito = arrayCarrito.find(e => e.producto == prod);
-    if(variableCarrito != undefined){
-
-    let posicion = arrayCarrito.findIndex(elem => elem.producto == variableCarrito.producto)
-    arrayCarrito[posicion].sumaStock()
-    }else{
-        const enCarrito = new prodCarrito(prod, 1,)
+function sumaCarrito(nombreProducto, cantidad,) {
+    if (typeof cantidad === "number" && cantidad > 0) {
+        let productoEnCarrito = arrayCarrito.find(prod => prod.producto.nombre === nombreProducto);
+        if (productoEnCarrito != undefined) {
+        productoEnCarrito.sumaStock();
+        } else {
+        const producto = productos.find(p => p.nombre === nombreProducto);
+        const enCarrito = new prodCarrito(producto, cantidad, producto.precio);
         arrayCarrito.push(enCarrito);
-        console.log(arrayCarrito);
+        }
+        actualizarCarrito();
+    } else {
+        const totalCarrito = precioTotalCarrito();
+        console.log(`El precio total de la compra es de ${totalCarrito}`);
     }
 }
 
+function precioTotalCarrito() {
+    let total = 0;
+    for (let i = 0; i < arrayCarrito.length; i++) {
+        total += arrayCarrito[i].precioTotal();
+    }
+    return total;
+}
 
 
