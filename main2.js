@@ -1,24 +1,44 @@
-let nombreUser = prompt("Bienvenido a CerTek, Por favor ingrese su nombre");
-let apellidoUser = prompt ("Ingresa tu apellido");
+//Validacion de Datos
 
-let datosUser = nombreUser + " " + apellidoUser;
+let btnSubmit = document.getElementById("FormDeIngreso")
+btnSubmit.addEventListener("submit", validaForm)
 
-function saludoEspecifico (nombre){
-    alert(`Hola ${nombre}`);
+function validaForm(e){
+    e.preventDefault();
+    let contenidoForm = e.target;
+
+    let nombreUser = contenidoForm.children[0].value
+
+    let apellidoUser = contenidoForm.children[1].value
+    console.log(contenidoForm.children[1].value)
+
+    let edad = contenidoForm.children[2].value;
+    edad = parseInt(edad);
+    if (edad >= 18){
+        const cardBoostrap = (stockCompra) => {
+            for    (e of stockCompra){
+                let card = document.createElement("div")
+                card.innerHTML = `<div class="card" style="width: 18rem;">
+                <img src="./img/${e.imagen}" class="card-img-top" alt=" Esta es la imagen de ${e.nombre}">
+                <div class="card-body">
+                    <h5 class="card-title">${e.nombre}</h5>
+                    <p class="card-text">Aprovecha estas ofertas ${e.precio}! </p>
+                    <input type="button" onclick= "sumaCarrito(${e.id})" class="btn btn-primary" value="Solo quedan ${e.stock} unidades" >
+                </div>
+            </div>` 
+            document.body.append(card);
+            }
+        }
+        cardBoostrap(productos);
+    }
+    else{
+        let div = document.createElement("div")
+        div.innerHTML =`<h1> Hola ${nombreUser} NO sos mayor de 18, no podes ingresar a la web</h1>`
+        document.body.appendChild(div)
+    }
 }
-saludoEspecifico(datosUser)
 
-const mayor = 18; 
-let edad = parseInt(prompt("Ingresa tu edad"));
-
-if(edad >=mayor){
-    alert("Sos mayor podes ingresar a la web");
-} else {
-    alert("No sos mayor de 18, no podes ingresar a la web");
-}
-console.log(datosUser + "," + edad );
-
-//Identificador
+//Productos 
 
 class Producto {
 constructor(id, nombre, precio, stock, imagen) {
@@ -35,21 +55,6 @@ restaStock() {
 }
 }
 
-class prodCarrito {
-constructor(producto, cantidad, precio) {
-    this.producto = producto;
-    this.cantidad = cantidad;
-    this.precio = precio;
-}
-
-sumaStock() {
-    this.cantidad = this.cantidad + 1;
-}
-
-precioTotal() {
-    return this.cantidad * this.precio;
-}
-}
 
 const producto0 = new Producto(0, 'Santa Julia', 900, 15, 'Santa Julia.png');
 const producto1 = new Producto(1, 'Fernet', 1200, 20, 'Fernet.png');
@@ -60,19 +65,33 @@ const producto4 = new Producto(4, 'Campari', 600, 15, 'Campari.png');
 const productos = [producto0, producto1, producto2, producto3, producto4];
 console.log(productos);
 
-const arrayCarrito = [];
 
-function sumaCarrito(Producto, cantidad,) {
-if (typeof cantidad === "number" && cantidad > 0) {
-    let productoEnCarrito = arrayCarrito.find(prod => prod.producto.nombre === Producto);
-    if (productoEnCarrito != undefined) {
-        productoEnCarrito.sumaStock();
-    } else {
-        const producto = productos.find(p => p.nombre === Producto);
-        const enCarrito = new prodCarrito(Producto, cantidad, producto.precio);
-        arrayCarrito.push(enCarrito);
+//array Carrito
+const arrayCarrito = []
+
+class prodCarrito {
+    constructor(producto, cantidad) {
+        this.producto = producto;
+        this.cantidad = cantidad;
     }
-} 
+    
+    sumaStock(){
+        this.cantidad = this.cantidad + 1;
+    }
+}
+
+
+function sumaCarrito(Produ){
+    let ProductoEnCarrito = arrayCarrito.find(e => e.Producto == Produ)
+    if(ProductoEnCarrito != undefined){
+        let posicion = arrayCarrito.findIndex(elem => elem.producto == ProductoEnCarrito.producto)
+        arrayCarrito [posicion].sumaStock() 
+        console.table(arrayCarrito)
+    }else{
+        const sumaProducto = new prodCarrito (Produ, 1)
+        arrayCarrito.push(sumaProducto);
+        console.table(arrayCarrito)
+    }
 }
 
 function precioTotalCarrito() {
