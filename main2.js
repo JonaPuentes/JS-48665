@@ -71,7 +71,6 @@ const producto3 = new Producto(3, 'Aperol', 1200, 7, 'Aperol.png');
 const producto4 = new Producto(4, 'Campari', 600, 15, 'Campari.png');
 
 const productos = [producto0, producto1, producto2, producto3, producto4];
-console.log(productos);
 
 // Array de Carrito
 let arrayCarrito = [];
@@ -92,6 +91,37 @@ const carritoRecuperado = localStorage.getItem("arrayCarrito");
 
 //convierto el JSON a objeto
 const carritoObjeto = JSON.parse(carritoRecuperado);
+
+//Paso los objetos a JSON
+const productosJSON = JSON.stringify(productos)
+
+//Almaceno los objetos en el local
+localStorage.setItem("productos", productosJSON)
+
+//Recupero los objetos del JSON
+const produJSON = localStorage.getItem("productos");
+const produConsole = JSON.parse(produJSON);
+console.log(produConsole);
+
+
+//modo dark en la pagina
+const bmodeButton = document.getElementById("modeButton")
+    modeButton.addEventListener("click", () =>{
+    document.body.classList.toggle("dark");
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("modo", "dark")
+    } else {
+        localStorage.setItem("modo", "light");
+    }
+})
+
+//Lo recupero del localStorage
+const modo = localStorage.getItem("modo");
+    if(modo === "dark"){
+        document.body.classList.add("dark");
+    } else{
+        document.body.classList.remove("dark");
+    }
 
 
 
