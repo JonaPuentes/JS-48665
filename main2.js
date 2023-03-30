@@ -1,3 +1,9 @@
+swal({
+    title: "Bienvenido",
+    text: "Ingresa tus datos",
+    icon:"info",
+})
+
 // Validacion de Datos
 let btnSubmit = document.getElementById("FormDeIngreso")
 btnSubmit.addEventListener("submit", validaForm)
@@ -11,6 +17,11 @@ function validaForm(e) {
     edad = parseInt(edad);
 
     if (edad >= 18) {
+        swal({
+            title: "Datos confirmados",
+            text: "Gracias por ingresar tus datos, podes acceder",
+            icon: "success",
+        })
         const cardBoostrap = (stockCompra) => {
             for (e of stockCompra) {
                 let card = document.createElement("div")
@@ -34,9 +45,11 @@ function validaForm(e) {
             console.log("Carrito cargado desde localStorage:", arrayCarrito);
         }
     } else {
-        let div = document.createElement("div")
-        div.innerHTML = `<h1> Hola ${nombreUser} NO sos mayor de 18, no podes ingresar a la web</h1>`
-        document.body.appendChild(div)
+        swal({
+            title: "Validacion erronea",
+            text: "sos menor de 18 años, no podes ingresar",
+            icon: "error",
+        })
     }
 }
 
@@ -74,17 +87,9 @@ const productos = [producto0, producto1, producto2, producto3, producto4];
 
 // Array de Carrito
 let arrayCarrito = [];
-arrayCarrito.push(producto0);
-arrayCarrito.push(producto1);
-arrayCarrito.push(producto2);
-arrayCarrito.push(producto3);
-arrayCarrito.push(producto4);
 
 //convertir el carrito a JSON
 const carritoJSON = JSON.stringify(arrayCarrito);
-
-//Almaceno el carrito a localStorage
-localStorage.setItem("arrayCarrito", carritoJSON);
 
 //Recuperamos el carrito del localStorage
 const carritoRecuperado = localStorage.getItem("arrayCarrito");
@@ -105,7 +110,7 @@ console.log(produConsole);
 
 
 //modo dark en la pagina
-const bmodeButton = document.getElementById("modeButton")
+const modeButton = document.getElementById("modeButton")
     modeButton.addEventListener("click", () =>{
     document.body.classList.toggle("dark");
     if(document.body.classList.contains("dark")){
@@ -123,20 +128,52 @@ const modo = localStorage.getItem("modo");
         document.body.classList.remove("dark");
     }
 
+    //Uso de promesas & fetch (Usuarios aleatorios)
+
+    const link = 
+    "https://jsonplaceholder.typicode.com/users";  
+
+
+    const Users = async() =>{
+        const res = await fetch(link);
+        const data = await res.json();
+        console.log(data)
+    }
+
+    Users()
+
 
 
     function sumaCarrito(Produ){
-    let ProductoEnCarrito = arrayCarrito.find(e => e.Producto == Produ)
-    if (ProductoEnCarrito != undefined) {
-        let posicion = arrayCarrito.findIndex(elem => elem.producto == ProductoEnCarrito.producto)
-        arrayCarrito[posicion].sumaStock()
-        console.table(arrayCarrito)
-    } else {
-        const sumaProducto = new prodCarrito(Produ, 1)
-        arrayCarrito.push(sumaProducto);
-        console.table(arrayCarrito)
+    //console.log(Produ);
+    let producto = productos.find(e => e.id == Produ);
+    //console.log(producto);
+
+    const prodAlCarrito = {
+        nombre : producto.nombre,
+        precio : producto.precio,
+        id     : producto.id,
+        stock  : producto.stock,
+        img    : producto.imagen,
+        cantidad: 1,
     }
+
+    let existe = arrayCarrito.some(e => e.id == Produ)
+    if (existe) {
+        let posicion = arrayCarrito.findIndex((elem) => elem.id == producto.id);
+        arrayCarrito[posicion].cantidad++;
+        arrayCarrito[posicion].precio = prodAlCarrito.precio * arrayCarrito [posicion].cantidad;
+        console.log(arrayCarrito)
+    } else {
+        
+        arrayCarrito.push(prodAlCarrito);
+        console.log(arrayCarrito)
+    }
+    localStorage.setItem("arrayCarrito", JSON.stringify(arrayCarrito))
 }
+
+const total = calcularTotalCarrito();
+console.log(total);
 
 
 function precioTotalCarrito() {
@@ -144,6 +181,11 @@ function precioTotalCarrito() {
     for (let i = 0; i < arrayCarrito.length; i++) {
         total += arrayCarrito[i].precioTotal();
     }
+    return total;
+}
+
+function calcularTotalCarrito(){
+    const total = arrayCarrito.reduce ( (acc, prod) => acc += prod.precio, 0);
     return total;
 }
 
